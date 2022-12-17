@@ -13,12 +13,14 @@ app.register_blueprint(app_views)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
+
 @app.teardown_appcontext
 def tear_down(error):
     """
     closes alchemy session
     """
     storage.close()
+
 
 @app.errorhandler(404)
 def error():
@@ -27,7 +29,8 @@ def error():
     """
     return jsonify({"error": "Not found"}), 404
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     app.run(host=getenv('HBNB_API_HOST'),
             port=getenv('HBNB_API_PORT'),
             threaded=True)
